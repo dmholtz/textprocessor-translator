@@ -7,7 +7,7 @@ let processText = function (text) {
 
 const { PubSub } = require('@google-cloud/pubsub');
 const pubsub = new PubSub();
-const topic = pubsub.topic("tp-translator-Save");
+const topic = pubsub.topic("tp-translator-LanguageDetection");
 
 let publish = function (text) {
     const messageObject = {
