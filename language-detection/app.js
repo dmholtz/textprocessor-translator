@@ -20,7 +20,7 @@ let publishTextToTopic = function (text, topic) {
     }
 }
 
-exports.saveToDatastore = function (message, context) {
+exports.languageDetection = function (message, context) {
     const text = message.data
         ? Buffer.from(message.data, 'base64').toString() : "undefined";
 
