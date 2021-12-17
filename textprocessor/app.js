@@ -17,9 +17,6 @@ const topic = pubsub.topic("tp-translator-LanguageDetection");
 exports.textprocessor = async (req, res) => {
     console.log(`Publishing message to topic language-detection`);
 
-    // References an existing topic
-    const topic = pubsub.topic('language-detection');
-
     const messageBuffer = Buffer.from(req.body);
 
     // Publishes a message
