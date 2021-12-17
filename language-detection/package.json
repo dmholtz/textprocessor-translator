@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "@google-cloud/pubsub": "^2.18.4",
+    "@google-cloud/translate": "^6.3.1",
     "abort-controller": "^3.0.0",
     "agent-base": "^6.0.2",
     "ansi-regex": "^5.0.1",
@@ -17,6 +18,7 @@
     "color-convert": "^2.0.1",
     "color-name": "^1.1.4",
     "debug": "^4.3.3",
+    "dotenv": "^10.0.0",
     "duplexify": "^4.1.2",
     "ecdsa-sig-formatter": "^1.0.11",
     "emoji-regex": "^8.0.0",
