@@ -18,7 +18,7 @@ let publish = function (text) {
     const messageBuffer = Buffer.from(JSON.stringify(messageObject), 'utf8');
 
     try {
-        topic.publishMessage(text);
+        topic.publishMessage(messageBuffer);
         console.log("Publish successful");
     } catch (err) {
         console.error(err);
