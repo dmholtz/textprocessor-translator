@@ -14,24 +14,21 @@ const topic = pubsub.topic("tp-translator-LanguageDetection");
  * @param {*} request 
  * @param {*} response 
  */
-exports.textprocessor = async function (request, response) {
-    switch (request.method) {
-        case 'POST':
-            console.log("Publish message to topic LanguageDetection");
+exports.textprocessor = async (req, res) => {
+    console.log(`Publishing message to topic language-detection`);
 
-            const messageBuffer = Buffer.from(request.body);
-            try {
-                await topic.publishMessage(messageBuffer);
-                response.status(200).send(processText(req.body));
-            }
-            catch (err) {
-                console.err(err);
-                response.status(500).send(err);
-                return Promise.reject(err);
-            }
-            break;
-        default:
-            response.status(405).send();
-            return Promise.reject();
+    // References an existing topic
+    const topic = pubsub.topic('language-detection');
+
+    const messageBuffer = Buffer.from(req.body);
+
+    // Publishes a message
+    try {
+        await topic.publishMessage(messageBuffer);
+        res.status(200).send('[GCF] ' + req.body);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+        return Promise.reject(err);
     }
-}
+};
