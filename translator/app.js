@@ -2,6 +2,17 @@ const { PubSub } = require('@google-cloud/pubsub');
 const pubsub = new PubSub();
 const topic = pubsub.topic("tp-translator-Save");
 
+const { Translate } = require('@google-cloud/translate').v2;
+const translationClient = new Translate();
+
+async function translateText(text) {
+    let translation = await translationClient.translate(text, 'en');
+    consolge.log(translations);
+    return translation;
+}
+
+translateText("ich bin ein großer baum");
+
 let publish = function (text) {
     const messageObject = {
         data: {
@@ -23,6 +34,6 @@ exports.translate = function (message, context) {
         ? Buffer.from(message.data, 'base64').toString() : "undefined";
 
     // translate
-    let englishText = "[English] " + text;
+    let englishText = translateText(text);
     publish(englishText);
 }
