@@ -33,7 +33,7 @@ async function detectLanguage(text) {
 }
 
 const isEnglish = function (languageAcronym) {
-    return languageAcronym === 'en';
+    return languageAcronym == 'en';
 }
 
 exports.languageDetection = function (message, context) {
@@ -49,9 +49,12 @@ exports.languageDetection = function (message, context) {
     }
     else {
         // translate
-        console.log('Publish to tp-translator-Translation');
+        console.log('Publish to tp-translator-Translate');
         publishTextToTopic(text, translationTopic)
     }
 
-    message.ack();
+    if (typeof message.ack === "function") {
+        message.ack();
+    }
+
 }

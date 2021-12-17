@@ -12,7 +12,7 @@ const topic = pubsub.topic("tp-translator-LanguageDetection");
 async function publishText(text) {
 
     const messageOptions = {
-        data: Buffer.from(JSON.stringify(text))
+        data: Buffer.from(text)
     }
 
     try {
@@ -30,8 +30,6 @@ async function publishText(text) {
  */
 exports.textprocessor = async (req, res) => {
     console.log(`Publishing message to topic language-detection`);
-
-    const messageBuffer = Buffer.from(req.body);
 
     // Publishes a message
     try {
