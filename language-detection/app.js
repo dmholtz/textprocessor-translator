@@ -25,7 +25,7 @@ exports.languageDetection = function (message, context) {
         ? Buffer.from(message.data, 'base64').toString() : "undefined";
 
     // detect language
-    let isEnglish = true;
+    let isEnglish = false;
     if (isEnglish) {
         // save
         console.log('Publish to tp-translator-Save');
