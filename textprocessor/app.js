@@ -32,6 +32,6 @@ exports.textprocessor = async function (request, response) {
             break;
         default:
             response.status(405).send();
-            return Promise.reject(err);
+            return Promise.reject();
     }
 }
