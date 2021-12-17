@@ -9,43 +9,29 @@ const { PubSub } = require('@google-cloud/pubsub');
 const pubsub = new PubSub();
 const topic = pubsub.topic("tp-translator-LanguageDetection");
 
-let publish = function (text) {
-    const messageObject = {
-        data: {
-            message: text,
-        },
-    };
-    const messageBuffer = Buffer.from(JSON.stringify(messageObject), 'utf8');
-
-    try {
-        topic.publishMessage(messageBuffer);
-        console.log("Publish successful");
-    } catch (err) {
-        console.error(err);
-    }
-}
-
 /**
  * Valid textprocessor request is a HTTP-POST request with plaintext
  * @param {*} request 
  * @param {*} response 
  */
-exports.textprocessor = function (request, response) {
+exports.textprocessor = async function (request, response) {
     switch (request.method) {
         case 'POST':
-            let content_type = request.get('content-type');
-            if (content_type === 'text/plain') {
-                let processedText = processText(request.body);
-                publish(request.body);
-                response.status(200).send(processedText);
+            console.log("Publish message to topic LanguageDetection");
+
+            const messageBuffer = Buffer.from(request.body);
+            try {
+                await topic.publishMessage(messageBuffer);
+                response.status(200).send(processText(req.body));
             }
-            else {
-                // invalid content type
-                response.status(400).send();
+            catch (err) {
+                console.err(err);
+                response.status(500).send(err);
+                return Promise.reject(err);
             }
             break;
         default:
             response.status(405).send();
-            break;
+            return Promise.reject(err);
     }
 }
