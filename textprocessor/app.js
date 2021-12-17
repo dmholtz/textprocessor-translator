@@ -9,6 +9,20 @@ const { PubSub } = require('@google-cloud/pubsub');
 const pubsub = new PubSub();
 const topic = pubsub.topic("tp-translator-LanguageDetection");
 
+async function publishText(text) {
+
+    const messageOptions = {
+        data: Buffer.from(JSON.stringify(text))
+    }
+
+    try {
+        const messageId = await topic.publishMessage(messageOptions);
+        console.log(`Message ${messageId} published.`);
+    } catch (error) {
+        console.error(`Received error while publishing; ${error.message}`);
+    }
+}
+
 /**
  * Valid textprocessor request is a HTTP-POST request with plaintext
  * @param {*} request 
@@ -21,7 +35,7 @@ exports.textprocessor = async (req, res) => {
 
     // Publishes a message
     try {
-        await topic.publishMessage(messageBuffer);
+        await publishText(req.body);
         res.status(200).send('[GCF] ' + req.body);
     } catch (err) {
         console.error(err);
