@@ -9,6 +9,7 @@
   "author": "dmholtz",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/pubsub": "^2.18.4",
     "uuid": "^8.3.2"
   }
 }
