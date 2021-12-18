@@ -16,19 +16,17 @@ async function translateToEnglish(text) {
     })
 }
 
-let publish = function (text) {
-    const messageObject = {
-        data: {
-            message: text,
-        },
-    };
-    const messageBuffer = Buffer.from(JSON.stringify(messageObject), 'utf8');
+async function publishText(text) {
+
+    const messageOptions = {
+        data: Buffer.from(JSON.stringify(text))
+    }
 
     try {
-        topic.publishMessage(messageBuffer);
-        console.log("Publish successful");
-    } catch (err) {
-        console.error(err);
+        const messageId = await topic.publishMessage(messageOptions);
+        console.log(`Message ${messageId} published.`);
+    } catch (error) {
+        console.error(`Received error while publishing; ${error.message}`);
     }
 }
 
@@ -37,5 +35,5 @@ exports.translate = async function (message, context) {
         ? Buffer.from(message.data, 'base64').toString() : "undefined";
 
     const englishText = await translateToEnglish(text);
-    publish(englishText);
+    await publishText(englishText);
 }
