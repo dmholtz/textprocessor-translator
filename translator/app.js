@@ -12,7 +12,7 @@ async function translateToEnglish(text) {
     translations = Array.isArray(translations) ? translations : [translations];
     console.log('Translations:');
     translations.forEach((translation, i) => {
-        console.log(`${text[i]} => ${translation}`);
+        console.log(`${text} => ${translation}`);
     })
     return translations[0];
 }
@@ -36,5 +36,6 @@ exports.translate = async function (message, context) {
         ? Buffer.from(message.data, 'base64').toString() : "undefined";
 
     const englishText = await translateToEnglish(text);
-    await publishText(englishText);
+    console.log(`Translation=${englishText}, type=${typeof englishText}`);
+    publishText(englishText);
 }
