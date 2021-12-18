@@ -1,0 +1,15 @@
+{
+  "name": "storage-function",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dmholtz",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/datastore": "^6.6.2",
+    "dotenv": "^10.0.0"
+  }
+}
