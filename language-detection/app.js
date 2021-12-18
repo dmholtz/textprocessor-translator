@@ -36,11 +36,11 @@ const isEnglish = function (languageAcronym) {
     return languageAcronym == 'en';
 }
 
-exports.languageDetection = function (message, context) {
+exports.languageDetection = async function (message, context) {
     const text = message.data
         ? Buffer.from(message.data, 'base64').toString() : "undefined";
 
-    const detectedLanguage = detectLanguage(text);
+    const detectedLanguage = await detectLanguage(text);
 
     if (isEnglish(detectedLanguage)) {
         // save
@@ -56,5 +56,4 @@ exports.languageDetection = function (message, context) {
     if (typeof message.ack === "function") {
         message.ack();
     }
-
 }

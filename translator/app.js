@@ -3,15 +3,18 @@ const pubsub = new PubSub();
 const topic = pubsub.topic("tp-translator-Save");
 
 const { Translate } = require('@google-cloud/translate').v2;
-const translationClient = new Translate();
+const translateClient = new Translate();
 
-async function translateText(text) {
-    let translation = await translationClient.translate(text, 'en');
-    consolge.log(translations);
-    return translation;
+async function translateToEnglish(text) {
+    console.log(`Translate the following text to English: ${text}`);
+    const target = 'en'
+    let [translations] = await translateClient.translate(text, target);
+    translations = Array.isArray(translations) ? translations : [translations];
+    console.log('Translations:');
+    translations.forEach((translation, i) => {
+        console.log(`${text[i]} => ${translation}`);
+    })
 }
-
-translateText("ich bin ein großer baum");
 
 let publish = function (text) {
     const messageObject = {
@@ -29,11 +32,10 @@ let publish = function (text) {
     }
 }
 
-exports.translate = function (message, context) {
+exports.translate = async function (message, context) {
     const text = message.data
         ? Buffer.from(message.data, 'base64').toString() : "undefined";
 
-    // translate
-    let englishText = translateText(text);
+    const englishText = await translateToEnglish(text);
     publish(englishText);
 }
