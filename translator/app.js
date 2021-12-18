@@ -14,6 +14,7 @@ async function translateToEnglish(text) {
     translations.forEach((translation, i) => {
         console.log(`${text[i]} => ${translation}`);
     })
+    return translations[0];
 }
 
 async function publishText(text) {
